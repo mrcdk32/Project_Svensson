@@ -17,7 +17,7 @@ public class PatrolingEnemyTest : Enemy
     public float attackRadius;
 
     // Start is called before the first frame update
-    public void Start()
+    void Start()
     {
         waitTime = startWaitTime;
         moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
@@ -27,7 +27,7 @@ public class PatrolingEnemyTest : Enemy
     }
 
     // Update is called once per frame
-    public void Update()
+    void Update()
     { 
         myRigidbody.velocity = Vector2.zero;
 
@@ -35,7 +35,7 @@ public class PatrolingEnemyTest : Enemy
 
 
     }
-    public virtual void  CheckDistance()
+    public void CheckDistance()
     {
 
         if (Vector3.Distance(target.position, transform.position) <= chaseRadius && Vector3.Distance(target.position, transform.position) > attackRadius)
