@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReatreatingShootingEnemy : BasicEnemyBehaviour
+public class ReatreatingShootingEnemy : Enemy
 {
+  
     public GameObject projectile;
     public float fireDelay;
     private float fireDelaySeconds;
@@ -11,11 +12,24 @@ public class ReatreatingShootingEnemy : BasicEnemyBehaviour
     public float stoppingDistance;
     public float retreatDistance;
     public Transform player;
+    private float waitTime;
+    public float startWaitTime;
+    public Transform moveSpot;
+    public float maxX;
+    public float minX;
+    public float minY;
+    public float maxY;
+    public Rigidbody2D myRigidbody;
+    public Transform target;
+    public float chaseRadius;
+    public float attackRadius;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        myRigidbody = GetComponent<Rigidbody2D>();
+        moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
     }
 
     // Update is called once per frame
@@ -35,8 +49,11 @@ public class ReatreatingShootingEnemy : BasicEnemyBehaviour
             canFire = true;
             fireDelaySeconds = fireDelay;
         }
+        myRigidbody.velocity = Vector2.zero;
+
+        CheckDistance();
     }
-    public override void CheckDistance()
+    public void CheckDistance()
     {
         if (Vector3.Distance(target.position, transform.position) <= chaseRadius && Vector3.Distance(target.position, transform.position) > attackRadius)
         {
@@ -67,11 +84,39 @@ public class ReatreatingShootingEnemy : BasicEnemyBehaviour
   
 
         }
+        else
+        {
+            Patrol();
+        }
         /*else if (Vector3.Distance(target.position, transform.position) > chaseRadius)
         {
             animation.SetBool("Walk", false);
         }
         */
+
+    }
+    public void Patrol()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, enemySpeed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, moveSpot.position) < 0.2f)
+        {
+            if (waitTime <= 0)
+            {
+                moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+                waitTime = startWaitTime;
+            }
+            else
+            {
+                waitTime -= Time.deltaTime;
+            }
+        }
+    }
+    public void ChangeState(EnemyState newstate)
+    {
+        if (currentState != newstate)
+        {
+            currentState = newstate;
+        }
 
     }
 }

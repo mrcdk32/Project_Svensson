@@ -20,11 +20,13 @@ public class Player : MonoBehaviour
     private Rigidbody2D myRigidbody;
     public Vector3 move;
     private Animator animation;
+    public VectorValue startingPosition;
     // Start is called before the first frame update
     void Start()
     {
         animation = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
+        transform.position = startingPosition.initialValue;
     }
 
     // Update is called once per frame
