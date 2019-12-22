@@ -10,6 +10,10 @@ public class Playerhealth : BasicHealthScript
     {
         currentHealth = maxHealth.RuntimeValue;
     }
+    void update()
+    {
+        currentHealth = maxHealth.RuntimeValue;
+    }
     public override void Damage(float amountToDamage)
     {
         base.Damage(amountToDamage);

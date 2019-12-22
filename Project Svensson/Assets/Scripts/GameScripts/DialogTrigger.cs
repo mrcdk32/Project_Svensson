@@ -38,6 +38,7 @@ public class DialogTrigger : MonoBehaviour
         if (collision.CompareTag("Player") && !collision.isTrigger)
         {
             context.Raise();
+            FindObjectOfType<DialogManager>().EndDialog();
             playerInRange = false;
         }
     }

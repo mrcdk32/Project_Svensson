@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-[System.Serializable]
+[CreateAssetMenu(menuName = "Scriptable Objects/Values/Float Value", fileName = "New Float Value")]
 public class FloatValue : ScriptableObject
 {
     public float initialValue;
@@ -11,5 +10,9 @@ public class FloatValue : ScriptableObject
 
     public float RuntimeValue;
 
+   // private void OnEnable()
+    //{
+       // initialValue = RuntimeValue;
+   // }
 
 }
